@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Primix\Tables\Filters\TrashedFilter;
+
+class {{ class }} extends TrashedFilter
+{
+    protected function setUp(): void
+    {
+        $this->label('{{ label }}');
+        $this->withLabel('With trashed');
+        $this->withoutLabel('Without trashed');
+        $this->onlyLabel('Only trashed');
+    }
+}

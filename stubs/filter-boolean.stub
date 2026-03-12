@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use Primix\Tables\Filters\BooleanFilter;
+
+class {{ class }} extends BooleanFilter
+{
+    protected function setUp(): void
+    {
+        $this->label('{{ label }}');
+        $this->trueLabel('Yes');
+        $this->falseLabel('No');
+    }
+}

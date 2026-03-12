@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Primix\Tables\Filters\TernaryFilter;
+
+class {{ class }} extends TernaryFilter
+{
+    protected function setUp(): void
+    {
+        $this->label('{{ label }}');
+        $this->trueLabel('Yes');
+        $this->falseLabel('No');
+        $this->allLabel('All');
+    }
+}

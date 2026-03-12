@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Primix\Tables\Filters\SelectFilter;
+
+class {{ class }} extends SelectFilter
+{
+    protected function setUp(): void
+    {
+        $this->label('{{ label }}');
+        $this->options([
+            //
+        ]);
+    }
+}

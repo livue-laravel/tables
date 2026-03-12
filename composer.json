@@ -1,0 +1,28 @@
+{
+    "name": "primix/tables",
+    "description": "Table builder for Primix admin panel framework",
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "primix/support": "self.version",
+        "primix/actions": "self.version"
+    },
+    "suggest": {
+        "primix/forms": "Required for ExportAction and ImportAction form schemas"
+    },
+    "autoload": {
+        "psr-4": {
+            "Primix\\Tables\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Primix\\Tables\\PrimixTablesServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

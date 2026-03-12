@@ -405,7 +405,7 @@ class Table extends ComponentContainer implements Htmlable
 
     public function getSearchPlaceholder(): string
     {
-        return $this->searchPlaceholder ?? 'Search...';
+        return $this->searchPlaceholder ?? __('primix-tables::tables.search_placeholder');
     }
 
     public function getRecordKeyName(): string

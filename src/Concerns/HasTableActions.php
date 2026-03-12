@@ -176,7 +176,7 @@ trait HasTableActions
     {
         return $this->resolveConfiguredActions([
             Action::make('clearSelection')
-                ->label('Cancel')
+                ->label(__('primix-tables::tables.cancel'))
                 ->link()
                 ->color('gray')
                 ->jsAction("livue.set('selectedRecords', [])")
@@ -190,7 +190,7 @@ trait HasTableActions
     {
         return $this->resolveConfiguredActions([
             Action::make('toggleColumns')
-                ->label('Toggle Columns')
+                ->label(__('primix-tables::tables.toggle_columns'))
                 ->icon('pi pi-table')
                 ->iconButton(true, true)
                 ->color('gray')

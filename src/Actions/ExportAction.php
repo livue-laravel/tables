@@ -35,13 +35,13 @@ class ExportAction extends Action
 
     protected function setUp(): void
     {
-        $this->label('Export');
+        $this->label(__('primix-tables::tables.export'));
         $this->icon('heroicon-o-arrow-down-tray');
         $this->color('gray');
         $this->modal();
-        $this->modalHeading('Export Records');
+        $this->modalHeading(__('primix-tables::tables.export_records'));
         $this->modalDescription('Select the columns to include in the export.');
-        $this->modalSubmitActionLabel('Export');
+        $this->modalSubmitActionLabel(__('primix-tables::tables.export'));
     }
 
     /**
@@ -143,7 +143,7 @@ class ExportAction extends Action
 
         return [
             CheckboxList::make('columns')
-                ->label('Columns')
+                ->label(__('primix-tables::tables.columns'))
                 ->options($options)
                 ->default(array_keys($options))
                 ->bulkToggleable(),
@@ -207,7 +207,7 @@ class ExportAction extends Action
         $livue->downloadContent($csv, $this->getFileName());
 
         Notification::make()
-            ->title('Export completed')
+            ->title(__('primix-tables::tables.export_completed'))
             ->success()
             ->send();
 

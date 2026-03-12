@@ -13,7 +13,7 @@ class AddAction extends Action
 
     protected function setUp(): void
     {
-        $this->label('Add');
+        $this->label(__('primix-tables::tables.add'));
         $this->icon('pi pi-plus');
         $this->color('primary');
         $this->iconButton();

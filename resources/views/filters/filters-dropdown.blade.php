@@ -25,10 +25,10 @@
     <p-popover ref="filterPopover">
         <div class="flex flex-col gap-4 p-2 min-w-[250px]">
             <div class="flex items-center justify-between">
-                <span class="font-semibold text-sm text-gray-900">Filters</span>
+                <span class="font-semibold text-sm text-gray-900">{{ __('primix-tables::tables.filters') }}</span>
                 @if($hasActiveFilters)
                     <p-button
-                        label="Reset"
+                        label="{{ __('primix-tables::tables.reset') }}"
                         severity="secondary"
                         text
                         size="small"

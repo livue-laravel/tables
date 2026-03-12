@@ -22,7 +22,7 @@
                 const current = tableFilters['{{ $filterName }}'] || {};
                 setTableFilter('{{ $filterName }}', { ...current, from: val });
             }"
-            placeholder="From"
+            placeholder="{{ __('primix-tables::tables.from') }}"
             @if($format) date-format="{{ $format }}" @endif
             @if($minDate) :min-date="new Date('{{ $minDate }}')" @endif
             @if($maxDate) :max-date="new Date('{{ $maxDate }}')" @endif
@@ -36,7 +36,7 @@
                 const current = tableFilters['{{ $filterName }}'] || {};
                 setTableFilter('{{ $filterName }}', { ...current, until: val });
             }"
-            placeholder="Until"
+            placeholder="{{ __('primix-tables::tables.until') }}"
             @if($format) date-format="{{ $format }}" @endif
             @if($minDate) :min-date="new Date('{{ $minDate }}')" @endif
             @if($maxDate) :max-date="new Date('{{ $maxDate }}')" @endif

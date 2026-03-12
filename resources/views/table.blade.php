@@ -175,7 +175,7 @@
                 <tr>
                     @if($isReorderEnabled)
                         <th scope="col" class="w-8 px-2">
-                            <span class="sr-only">Reorder</span>
+                            <span class="sr-only">{{ __('primix-tables::tables.reorder') }}</span>
                         </th>
                     @endif
 
@@ -215,7 +215,7 @@
 
                     @if($showActionsColumn)
                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                            <span class="sr-only">Actions</span>
+                            <span class="sr-only">{{ __('primix-tables::tables.actions') }}</span>
                         </th>
                     @endif
                 </tr>

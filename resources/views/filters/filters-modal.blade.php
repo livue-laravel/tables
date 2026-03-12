@@ -19,7 +19,7 @@
 
     <p-dialog
         v-model:visible="showFilterModal"
-        header="Filters"
+        header="{{ __('primix-tables::tables.filters') }}"
         modal
         :style="{ width: '400px' }"
     >
@@ -35,14 +35,14 @@
         <template #footer>
             <div class="flex justify-between w-full">
                 <p-button
-                    label="Reset all"
+                    label="{{ __('primix-tables::tables.reset_all') }}"
                     severity="secondary"
                     text
                     @click="resetTableFilters()"
                     :disabled="{{ $hasActiveFilters ? 'false' : 'true' }}"
                 />
                 <p-button
-                    label="Done"
+                    label="{{ __('primix-tables::tables.done') }}"
                     @click="showFilterModal = false"
                 />
             </div>

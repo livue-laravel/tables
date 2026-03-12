@@ -15,7 +15,7 @@
 
         <p-popover ref="columnTogglePopover">
             <div class="flex flex-col gap-2 p-2 min-w-[200px]">
-                <span class="font-semibold text-sm text-gray-900 dark:text-white">Toggle Columns</span>
+                <span class="font-semibold text-sm text-gray-900 dark:text-white">{{ __('primix-tables::tables.toggle_columns') }}</span>
 
                 @foreach($toggleableColumns as $column)
                     <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">

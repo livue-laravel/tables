@@ -19,6 +19,7 @@ class PrimixTablesServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'primix-tables');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'primix-tables');
 
         $this->registerAssets();
         $this->registerComponentTypes();
@@ -27,6 +28,10 @@ class PrimixTablesServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../resources/views' => resource_path('views/vendor/primix-tables'),
             ], 'primix-tables-views');
+
+            $this->publishes([
+                __DIR__ . '/../resources/lang' => lang_path('vendor/primix-tables'),
+            ], 'primix-tables-translations');
 
             $assets = [
                 __DIR__ . '/../dist/primix-tables.css' => public_path('vendor/livue/primix/tables/primix-tables.css'),

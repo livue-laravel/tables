@@ -38,11 +38,11 @@ class ImportAction extends Action
 
     protected function setUp(): void
     {
-        $this->label('Import');
+        $this->label(__('primix-tables::tables.import'));
         $this->icon('heroicon-o-arrow-up-tray');
         $this->color('gray');
         $this->modal();
-        $this->modalHeading('Import Records');
+        $this->modalHeading(__('primix-tables::tables.import_records'));
         $this->modalWidth('lg');
     }
 
@@ -127,7 +127,7 @@ class ImportAction extends Action
     {
         return [
             FileUpload::make('file')
-                ->label('CSV File')
+                ->label(__('primix-tables::tables.csv_file'))
                 ->acceptedFileTypes(['text/csv', 'text/plain', 'application/csv', 'application/vnd.ms-excel'])
                 ->required()
                 ->disk('local')
@@ -162,7 +162,7 @@ class ImportAction extends Action
             $defaultMapping = $data['_mapping'][$column->getName()] ?? null;
 
             $components[] = Select::make('mapping_' . $column->getName())
-                ->label('Map "' . $column->getLabel() . '" to CSV column')
+                ->label(__('primix-tables::tables.map_column_to', ['column' => $column->getLabel()]))
                 ->options($csvHeaderOptions)
                 ->default($defaultMapping);
         }
@@ -206,7 +206,7 @@ class ImportAction extends Action
 
         if (! file_exists($fullPath)) {
             Notification::make()
-                ->title('Could not read the uploaded file.')
+                ->title(__('primix-tables::tables.import_error_unreadable'))
                 ->danger()
                 ->send();
 
@@ -224,7 +224,7 @@ class ImportAction extends Action
 
         if (empty($parsed['headers'])) {
             Notification::make()
-                ->title('The CSV file appears to be empty or invalid.')
+                ->title(__('primix-tables::tables.import_error_empty'))
                 ->danger()
                 ->send();
 
@@ -297,7 +297,7 @@ class ImportAction extends Action
 
         if (empty($headerMapping)) {
             Notification::make()
-                ->title('No columns were mapped. Please map at least one column.')
+                ->title(__('primix-tables::tables.import_error_no_columns_mapped'))
                 ->warning()
                 ->send();
 

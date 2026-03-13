@@ -37,7 +37,7 @@
     @else
         @if($state)
             @if($onIcon)
-                <i class="{{ $onIcon }}" style="color: {{ $textOnColor }}"></i>
+                {!! app(\Primix\Support\Icons\IconManager::class)->render($onIcon, null, null, 'color: ' . $textOnColor) !!}
             @else
                 <span style="color: {{ $textOnColor }}">
                     {{ $onLabel ?? __('Yes') }}
@@ -45,7 +45,7 @@
             @endif
         @else
             @if($offIcon)
-                <i class="{{ $offIcon }}" style="color: {{ $textOffColor }}"></i>
+                {!! app(\Primix\Support\Icons\IconManager::class)->render($offIcon, null, null, 'color: ' . $textOffColor) !!}
             @else
                 <span style="color: {{ $textOffColor }}">
                     {{ $offLabel ?? __('No') }}

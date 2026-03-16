@@ -17,6 +17,8 @@ trait HasTableActions
 
     protected array|Closure|null $columnToggleActions = null;
 
+    protected array|Closure|null $layoutToggleActions = null;
+
     protected ?string $resourceClass = null;
 
     public function resource(?string $resourceClass): static
@@ -92,6 +94,26 @@ trait HasTableActions
         }
 
         return $this->filterVisibleActions($this->resolveConfiguredActions($this->columnToggleActions));
+    }
+
+    public function layoutToggleActions(array|Closure $actions): static
+    {
+        $this->layoutToggleActions = $actions;
+
+        return $this;
+    }
+
+    public function getLayoutToggleActions(): array
+    {
+        if (! $this->isLayoutSwitchable()) {
+            return [];
+        }
+
+        if ($this->layoutToggleActions === null) {
+            return $this->getDefaultLayoutToggleActions();
+        }
+
+        return $this->filterVisibleActions($this->resolveConfiguredActions($this->layoutToggleActions));
     }
 
     public function getActions(): array
@@ -195,6 +217,24 @@ trait HasTableActions
                 ->iconButton(true, true)
                 ->color('gray')
                 ->jsAction('columnTogglePopover.toggle($event)')
+                ->extraAttributes([
+                    'class' => 'inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700',
+                ]),
+        ]);
+    }
+
+    protected function getDefaultLayoutToggleActions(): array
+    {
+        return $this->resolveConfiguredActions([
+            Action::make('toggleLayout')
+                ->label(fn () => $this->getLayout() === 'grid'
+                    ? __('primix-tables::tables.switch_to_table')
+                    : __('primix-tables::tables.switch_to_grid')
+                )
+                ->icon(fn () => $this->getLayout() === 'grid' ? 'pi pi-table' : 'pi pi-th-large')
+                ->iconButton(true, true)
+                ->color('gray')
+                ->jsAction('toggleTableLayout()')
                 ->extraAttributes([
                     'class' => 'inline-flex items-center justify-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 p-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700',
                 ]),

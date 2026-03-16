@@ -16,6 +16,7 @@
         + ($isReorderEnabled ? 1 : 0);
     $hasIndividualSearch = $table->hasIndividuallySearchableColumns();
     $headerActions = $table->getHeaderActions();
+    $layoutToggleActions = $table->getLayoutToggleActions();
     $recordIds = $records->pluck($table->getRecordKeyName())->toArray();
     $recordCount = count($recordIds);
     $spaEnabled = (bool) ($spa ?? false);
@@ -41,7 +42,7 @@
     @endif
 
     {{-- Search, Filters, and Column Toggle --}}
-    @if($table->isSearchable() || count($table->getFilters()) > 0 || $table->hasToggleableColumns())
+    @if($table->isSearchable() || count($table->getFilters()) > 0 || $table->hasToggleableColumns() || count($layoutToggleActions) > 0)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-4 sm:px-6">
             <div class="flex items-center justify-end gap-4">
                 @if($table->isSearchable())
@@ -69,6 +70,12 @@
 
                 @if($table->hasToggleableColumns())
                     @include('primix-tables::columns.column-toggle', ['table' => $table])
+                @endif
+
+                @if(count($layoutToggleActions) > 0)
+                    @foreach($layoutToggleActions as $layoutToggleAction)
+                        {{ $layoutToggleAction }}
+                    @endforeach
                 @endif
             </div>
         </div>

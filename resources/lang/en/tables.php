@@ -4,6 +4,8 @@ return [
     'search_placeholder' => 'Search...',
     'cancel' => 'Cancel',
     'toggle_columns' => 'Toggle Columns',
+    'switch_to_grid' => 'Switch to grid',
+    'switch_to_table' => 'Switch to table',
     'add' => 'Add',
     'export' => 'Export',
     'export_selected' => 'Export selected',

@@ -29,6 +29,8 @@ trait HasTable
 
     public int $tablePerPage = 10;
 
+    public string $tableLayout = '';
+
     public array $tableColumnSearches = [];
 
     public array $tableInlineCreateData = [];
@@ -41,6 +43,7 @@ trait HasTable
     {
         if ($this->cachedTable === null) {
             $this->cachedTable = $this->table(Table::make()->livue($this));
+            $this->initializeTableLayoutState($this->cachedTable);
         }
 
         return $this->cachedTable;
@@ -199,6 +202,28 @@ trait HasTable
         $this->resetPage();
     }
 
+    public function setTableLayout(string $layout): void
+    {
+        if (! in_array($layout, ['table', 'grid'], true)) {
+            throw new \InvalidArgumentException("Unsupported table layout [{$layout}]. Supported layouts are [table, grid].");
+        }
+
+        $this->tableLayout = $layout;
+
+        if ($this->cachedTable !== null) {
+            $this->cachedTable->layout($layout);
+        }
+    }
+
+    public function toggleTableLayout(): void
+    {
+        if (! $this->getTable()->isLayoutSwitchable()) {
+            return;
+        }
+
+        $this->setTableLayout($this->tableLayout === 'grid' ? 'table' : 'grid');
+    }
+
     /**
      * Update an editable column's state.
      * Called from Vue when a user edits an inline column value.
@@ -282,6 +307,15 @@ trait HasTable
     protected function resetTableCache(): void
     {
         $this->cachedTable = null;
+    }
+
+    protected function initializeTableLayoutState(Table $table): void
+    {
+        if ($this->tableLayout === '') {
+            $this->tableLayout = $table->getLayout();
+        }
+
+        $table->layout($this->tableLayout);
     }
 
     private function getEmbeddedTableRecords(Table $table): LengthAwarePaginator

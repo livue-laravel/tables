@@ -112,7 +112,7 @@ class Table extends ComponentContainer implements Htmlable
         // Table-level properties
         $tableProps = [
             'defaultPerPage', 'searchable', 'striped', 'selectable',
-            'searchPlaceholder', 'recordKey',
+            'searchPlaceholder', 'recordKey', 'layout', 'grid', 'switchableLayout',
         ];
 
         foreach ($tableProps as $prop) {
@@ -444,6 +444,7 @@ class Table extends ComponentContainer implements Htmlable
             'headerActions' => array_map(fn ($a) => $a->toVueProps(), $this->headerActions),
             'bulkBarActions' => array_map(fn ($a) => $a->toVueProps(), $this->getBulkBarActions()),
             'columnToggleActions' => array_map(fn ($a) => $a->toVueProps(), $this->getColumnToggleActions()),
+            'layoutToggleActions' => array_map(fn ($a) => $a->toVueProps(), $this->getLayoutToggleActions()),
             'searchable' => $this->isSearchable(),
             'searchPlaceholder' => $this->getSearchPlaceholder(),
             'perPage' => $this->defaultPerPage,
@@ -459,6 +460,7 @@ class Table extends ComponentContainer implements Htmlable
             'parentKeyColumn' => $this->getParentKeyColumn(),
             'layout' => $this->getLayout(),
             'gridColumns' => $this->getGridColumns(),
+            'layoutSwitchable' => $this->isLayoutSwitchable(),
             'virtualScroll' => $this->isVirtualScroll(),
             'virtualScrollItemSize' => $this->getVirtualScrollItemSize(),
             'emptyState' => [

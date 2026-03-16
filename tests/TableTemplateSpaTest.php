@@ -32,3 +32,12 @@ it('column toggle template renders actions through table API without hardcoded b
         ->toContain('@foreach($table->getColumnToggleActions() as $columnToggleAction)')
         ->not->toContain('<button');
 });
+
+it('table template renders layout toggle actions through table API without hardcoded button', function () {
+    $template = file_get_contents(dirname(__DIR__) . '/resources/views/table.blade.php');
+
+    expect($template)
+        ->toContain('$layoutToggleActions = $table->getLayoutToggleActions();')
+        ->toContain('@foreach($layoutToggleActions as $layoutToggleAction)')
+        ->not->toContain('<button');
+});

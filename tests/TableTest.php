@@ -113,6 +113,34 @@ it('can set column toggle actions', function () {
         ->and($table->getColumnToggleActions()[0]->getName())->toBe('customToggle');
 });
 
+it('has no layout toggle actions by default', function () {
+    $table = Table::make();
+
+    expect($table->getLayoutToggleActions())->toBe([]);
+});
+
+it('can enable switchable layout with a default toggle action', function () {
+    $table = Table::make()->switchableLayout();
+    $actions = $table->getLayoutToggleActions();
+
+    expect($actions)->toHaveCount(1)
+        ->and($actions[0])->toBeInstanceOf(Action::class)
+        ->and($actions[0]->getName())->toBe('toggleLayout')
+        ->and($actions[0]->isIconButton())->toBeTrue()
+        ->and($actions[0]->getJsAction())->toBe('toggleTableLayout()');
+});
+
+it('can set layout toggle actions', function () {
+    $table = Table::make()
+        ->switchableLayout()
+        ->layoutToggleActions([
+            Action::make('customLayoutToggle'),
+        ]);
+
+    expect($table->getLayoutToggleActions())->toHaveCount(1)
+        ->and($table->getLayoutToggleActions()[0]->getName())->toBe('customLayoutToggle');
+});
+
 it('has default per page of 10', function () {
     $table = Table::make();
 
@@ -424,7 +452,12 @@ it('can set virtual scroll item size', function () {
 });
 
 it('includes tree and grid props in array', function () {
-    $table = Table::make()->tree()->grid(4);
+    $table = Table::make()
+        ->tree()
+        ->grid(4)
+        ->searchPlaceholder('Search...')
+        ->bulkBarActions([])
+        ->columnToggleActions([]);
 
     $array = $table->toArray();
 
@@ -433,5 +466,7 @@ it('includes tree and grid props in array', function () {
         ->toHaveKey('childrenRelationship', 'children')
         ->toHaveKey('layout', 'grid')
         ->toHaveKey('gridColumns', 4)
+        ->toHaveKey('layoutSwitchable', false)
+        ->toHaveKey('layoutToggleActions')
         ->toHaveKey('virtualScroll', false);
 });

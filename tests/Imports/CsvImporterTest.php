@@ -3,8 +3,6 @@
 use Primix\Tables\Imports\CsvImporter;
 use Primix\Tables\Imports\ImportColumn;
 
-uses(Tests\TestCase::class);
-
 function createTempCsv(string $content): string
 {
     $path = tempnam(sys_get_temp_dir(), 'csv_test_');

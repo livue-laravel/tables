@@ -5,6 +5,7 @@
     "type": "library",
     "require": {
         "php": "^8.2",
+        "livue/livue": "^1.5.0",
         "primix/support": "self.version",
         "primix/actions": "self.version"
     },

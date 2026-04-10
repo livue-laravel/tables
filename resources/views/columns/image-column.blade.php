@@ -27,7 +27,14 @@
     $images = is_array($state) ? $state : ($state ? [$state] : []);
 
     if ($disk) {
-        $images = array_map(fn ($img) => \Illuminate\Support\Facades\Storage::disk($disk)->url($img), $images);
+        $diskInstance = \Illuminate\Support\Facades\Storage::disk($disk);
+        $images = array_map(function ($img) use ($diskInstance) {
+            // Use only the path portion of the URL to avoid APP_URL mismatches
+            // in dev environments (e.g. APP_URL=http://localhost but server on :8000).
+            $url = $diskInstance->url($img);
+            $path = parse_url($url, PHP_URL_PATH);
+            return $path ?? $url;
+        }, $images);
     }
 
     if (empty($images) && $defaultImageUrl) {

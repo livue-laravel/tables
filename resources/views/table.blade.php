@@ -258,7 +258,7 @@
 
             <tbody
                 class="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800"
-                @if($isReorderEnabled) v-sort="'reorderTable'" v-sort.150ms @endif
+                @if($isReorderEnabled) v-sort.150ms="'reorderTable'" @endif
             >
                 @if($records->isEmpty())
                     <tr>

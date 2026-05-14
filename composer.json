@@ -6,8 +6,8 @@
     "require": {
         "php": "^8.2",
         "livue/livue": "^1.5.0",
-        "primix/support": "self.version",
-        "primix/actions": "self.version"
+        "primix/support": "^0.3.6",
+        "primix/actions": "^0.3.6"
     },
     "suggest": {
         "primix/forms": "Required for ExportAction and ImportAction form schemas"

@@ -117,9 +117,10 @@ class TextColumn extends Column
             }
 
             $date = \Carbon\Carbon::parse($state);
+            $timezone = $this->timezone ?? config('app.display_timezone');
 
-            if ($this->timezone !== null) {
-                $date = $date->setTimezone($this->timezone);
+            if ($timezone !== null) {
+                $date = $date->setTimezone($timezone);
             }
 
             return $date->format($this->dateFormat ?? 'M j, Y');
@@ -139,9 +140,10 @@ class TextColumn extends Column
             }
 
             $date = \Carbon\Carbon::parse($state);
+            $timezone = $this->timezone ?? config('app.display_timezone');
 
-            if ($this->timezone !== null) {
-                $date = $date->setTimezone($this->timezone);
+            if ($timezone !== null) {
+                $date = $date->setTimezone($timezone);
             }
 
             return $date->format($this->dateFormat ?? 'M j, Y H:i');
@@ -161,9 +163,10 @@ class TextColumn extends Column
             }
 
             $date = \Carbon\Carbon::parse($state);
+            $timezone = $this->timezone ?? config('app.display_timezone');
 
-            if ($this->timezone !== null) {
-                $date = $date->setTimezone($this->timezone);
+            if ($timezone !== null) {
+                $date = $date->setTimezone($timezone);
             }
 
             return $date->format($this->timeFormat ?? 'H:i');
@@ -181,7 +184,14 @@ class TextColumn extends Column
                 return null;
             }
 
-            return \Carbon\Carbon::parse($state)->diffForHumans();
+            $date = \Carbon\Carbon::parse($state);
+            $timezone = $this->timezone ?? config('app.display_timezone');
+
+            if ($timezone !== null) {
+                $date = $date->setTimezone($timezone);
+            }
+
+            return $date->diffForHumans();
         });
 
         return $this;

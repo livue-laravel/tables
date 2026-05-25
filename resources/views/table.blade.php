@@ -264,7 +264,7 @@
                     <tr>
                         <td colspan="{{ $colCount }}" class="text-center py-12">
                             @if($table->getEmptyStateIcon())
-                                <div class="mx-auto">
+                                <div class="flex justify-center">
                                     {!! app(\Primix\Support\Icons\IconManager::class)->render($table->getEmptyStateIcon(), 'text-gray-400', 'xl') !!}
                                 </div>
                             @endif

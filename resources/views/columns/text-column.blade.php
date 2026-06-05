@@ -11,13 +11,26 @@
     $openUrlInNewTab = $component->shouldOpenUrlInNewTab();
     $spaEnabled = (bool) ($spa ?? false);
 
+    $fullState = is_string($state) ? $state : null;
+    $isTruncated = false;
+
     if ($characterLimit && is_string($state)) {
-        $state = str($state)->limit($characterLimit)->toString();
+        $truncated = str($state)->limit($characterLimit)->toString();
+        if ($truncated !== $state) {
+            $state = $truncated;
+            $isTruncated = true;
+        }
     }
 
     if ($wordLimit && is_string($state)) {
-        $state = str($state)->words($wordLimit)->toString();
+        $truncated = str($state)->words($wordLimit)->toString();
+        if ($truncated !== $state) {
+            $state = $truncated;
+            $isTruncated = true;
+        }
     }
+
+    $isExpandable = $isTruncated && ! $isBadge && ! $url;
 
     $weightClass = match ($weight) {
         'bold' => 'font-bold',
@@ -25,6 +38,10 @@
         'medium' => 'font-medium',
         default => '',
     };
+
+    $colorClass = $color
+        ? app(\Primix\Support\Colors\ColorManager::class)->toTailwindClass($color, 'text', 600)
+        : '';
 @endphp
 
 <div class="primix-text-column">
@@ -48,6 +65,19 @@
         @if($url)
             </a>
         @endif
+    @elseif($isExpandable)
+        <details class="primix-text-expandable group inline-block">
+            <summary class="cursor-pointer list-none marker:hidden [&::-webkit-details-marker]:hidden">
+                <span class="{{ $weightClass }} {{ $colorClass }}">
+                    <span class="group-open:hidden">{{ $state }}</span>
+                    <span class="hidden group-open:inline whitespace-pre-wrap">{{ $fullState }}</span>
+                </span>
+                <span class="ml-1 text-xs text-primary-600 hover:underline select-none">
+                    <span class="group-open:hidden">{{ __('Show more') }}</span>
+                    <span class="hidden group-open:inline">{{ __('Show less') }}</span>
+                </span>
+            </summary>
+        </details>
     @else
         @if($url)
             <a
@@ -57,7 +87,7 @@
                 class="inline-flex items-center hover:underline"
             >
         @endif
-        <span class="{{ $weightClass }} {{ $color ? app(\Primix\Support\Colors\ColorManager::class)->toTailwindClass($color, 'text', 600) : '' }}">
+        <span class="{{ $weightClass }} {{ $colorClass }}">
             {!! $state ?? '<span class="text-surface-400">' . e($component->getPlaceholder() ?? '—') . '</span>' !!}
         </span>
         @if($url)

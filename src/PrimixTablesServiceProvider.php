@@ -4,7 +4,6 @@ namespace Primix\Tables;
 
 use Illuminate\Support\ServiceProvider;
 use LiVue\Facades\LiVueAsset;
-use LiVue\Features\SupportAssets\Css;
 use LiVue\Features\SupportAssets\Js;
 use Primix\Support\AssetVersion;
 use Primix\Support\ComponentTypeRegistry;
@@ -34,7 +33,6 @@ class PrimixTablesServiceProvider extends ServiceProvider
             ], 'primix-tables-translations');
 
             $assets = [
-                __DIR__ . '/../dist/primix-tables.css' => public_path('vendor/livue/primix/tables/primix-tables.css'),
                 __DIR__ . '/../dist/primix-tables.js' => public_path('vendor/livue/primix/tables/primix-tables.js'),
                 __DIR__ . '/../dist/primix-tables.js.map' => public_path('vendor/livue/primix/tables/primix-tables.js.map'),
             ];
@@ -62,7 +60,6 @@ class PrimixTablesServiceProvider extends ServiceProvider
         $assetsBasePath = '/' . trim(config('livue.assets_path', 'vendor/livue'), '/');
 
         LiVueAsset::register([
-            Css::make('primix-tables', "{$assetsBasePath}/primix/tables/primix-tables.css")->onRequest()->version($assetVersion),
             Js::make('primix-tables', "{$assetsBasePath}/primix/tables/primix-tables.js")->module()->onRequest()->version($assetVersion),
         ], 'primix/tables');
     }

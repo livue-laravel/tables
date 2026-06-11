@@ -237,6 +237,16 @@ class TextColumn extends Column
         return (bool) $this->evaluate($this->isBadge);
     }
 
+    public function isHtml(): bool
+    {
+        return (bool) $this->evaluate($this->isHtml);
+    }
+
+    public function isMarkdown(): bool
+    {
+        return (bool) $this->evaluate($this->isMarkdown);
+    }
+
     public function getView(): string
     {
         return 'primix-tables::columns.text-column';
@@ -251,6 +261,8 @@ class TextColumn extends Column
             'characterLimit' => $this->getCharacterLimit(),
             'wordLimit' => $this->getWordLimit(),
             'isBadge' => $this->isBadge(),
+            'isHtml' => $this->isHtml(),
+            'isMarkdown' => $this->isMarkdown(),
             'dateFormat' => $this->dateFormat,
             'timeFormat' => $this->timeFormat,
         ]);

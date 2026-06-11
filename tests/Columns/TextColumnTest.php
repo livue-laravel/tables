@@ -165,6 +165,39 @@ it('can set description position', function () {
     expect($column->getDescriptionPosition())->toBe('above');
 });
 
+it('is not html by default', function () {
+    $column = TextColumn::make('title');
+
+    expect($column->isHtml())->toBeFalse();
+});
+
+it('can be html', function () {
+    $column = TextColumn::make('title')->html();
+
+    expect($column->isHtml())->toBeTrue();
+});
+
+it('is not markdown by default', function () {
+    $column = TextColumn::make('title');
+
+    expect($column->isMarkdown())->toBeFalse();
+});
+
+it('can be markdown', function () {
+    $column = TextColumn::make('title')->markdown();
+
+    expect($column->isMarkdown())->toBeTrue();
+});
+
+it('accepts closures for html and markdown', function () {
+    $column = TextColumn::make('title')
+        ->html(fn () => true)
+        ->markdown(fn () => true);
+
+    expect($column->isHtml())->toBeTrue()
+        ->and($column->isMarkdown())->toBeTrue();
+});
+
 it('returns correct view', function () {
     $column = TextColumn::make('title');
 
@@ -187,5 +220,7 @@ it('returns complete vue props', function () {
         ->toHaveKey('descriptionPosition', 'below')
         ->toHaveKey('characterLimit', 100)
         ->toHaveKey('wordLimit', 20)
-        ->toHaveKey('isBadge', true);
+        ->toHaveKey('isBadge', true)
+        ->toHaveKey('isHtml', false)
+        ->toHaveKey('isMarkdown', false);
 });

@@ -23,7 +23,6 @@
 @endphp
 
 @once
-    @livueLoadStyle('primix-tables', 'primix/tables')
     @livueLoadScript('primix-tables', 'primix/tables', ['type' => 'module'])
 @endonce
 

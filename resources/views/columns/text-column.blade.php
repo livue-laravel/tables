@@ -1,6 +1,8 @@
 @php
     $state = $component->getState($record);
     $isBadge = $component->isBadge();
+    $isHtml = $component->isHtml();
+    $isMarkdown = $component->isMarkdown();
     $description = $component->getDescription();
     $descriptionPosition = $component->getDescriptionPosition();
     $weight = $component->getWeight();
@@ -11,10 +13,16 @@
     $openUrlInNewTab = $component->shouldOpenUrlInNewTab();
     $spaEnabled = (bool) ($spa ?? false);
 
+    if ($isMarkdown && is_string($state) && $state !== '') {
+        $state = \Illuminate\Support\Str::markdown($state, ['html_input' => 'strip', 'allow_unsafe_links' => false]);
+        $isHtml = true;
+    }
+
     $fullState = is_string($state) ? $state : null;
     $isTruncated = false;
 
-    if ($characterLimit && is_string($state)) {
+    // Truncating raw HTML would break tags: limits only apply to plain text
+    if ($characterLimit && is_string($state) && ! $isHtml) {
         $truncated = str($state)->limit($characterLimit)->toString();
         if ($truncated !== $state) {
             $state = $truncated;
@@ -22,7 +30,7 @@
         }
     }
 
-    if ($wordLimit && is_string($state)) {
+    if ($wordLimit && is_string($state) && ! $isHtml) {
         $truncated = str($state)->words($wordLimit)->toString();
         if ($truncated !== $state) {
             $state = $truncated;
@@ -87,9 +95,15 @@
                 class="inline-flex items-center hover:underline"
             >
         @endif
-        <span class="{{ $weightClass }} {{ $colorClass }}">
-            {!! $state ?? '<span class="text-surface-400">' . e($component->getPlaceholder() ?? '—') . '</span>' !!}
-        </span>
+        @if($state === null || $state === '')
+            <span class="text-surface-400">{{ $component->getPlaceholder() ?? '—' }}</span>
+        @elseif($isHtml)
+            <div class="prose prose-sm max-w-none dark:prose-invert {{ $weightClass }} {{ $colorClass }}">
+                {!! $state !!}
+            </div>
+        @else
+            <span class="{{ $weightClass }} {{ $colorClass }}">{{ $state }}</span>
+        @endif
         @if($url)
             </a>
         @endif

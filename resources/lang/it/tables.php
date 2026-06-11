@@ -28,4 +28,9 @@ return [
     'import_error_unreadable' => 'Impossibile leggere il file caricato.',
     'import_error_empty' => 'Il file CSV sembra essere vuoto o non valido.',
     'import_error_no_columns_mapped' => 'Nessuna colonna mappata. Mappare almeno una colonna.',
+    'export_modal_description' => 'Seleziona le colonne da includere nell\'esportazione.',
+    'export_success_notification' => 'Record esportati con successo',
+    'import_success_notification' => ':count record importati con successo',
+    'import_partial_success_notification' => ':count importati, :errors errori',
+    'import_error_rows' => 'Righe con errori: :rows',
 ];

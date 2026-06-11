@@ -351,13 +351,13 @@ class ImportAction extends Action
 
         if ($errorCount === 0) {
             Notification::make()
-                ->title("{$result['created']} record(s) imported successfully")
+                ->title(__('primix-tables::tables.import_success_notification', ['count' => $result['created']]))
                 ->success()
                 ->send();
         } else {
             Notification::make()
-                ->title("{$result['created']} imported, {$errorCount} error(s)")
-                ->body('Rows with errors: ' . implode(', ', array_map(fn ($e) => "#{$e['row']}", $result['errors'])))
+                ->title(__('primix-tables::tables.import_partial_success_notification', ['count' => $result['created'], 'errors' => $errorCount]))
+                ->body(__('primix-tables::tables.import_error_rows', ['rows' => implode(', ', array_map(fn ($e) => "#{$e['row']}", $result['errors']))]))
                 ->warning()
                 ->send();
         }

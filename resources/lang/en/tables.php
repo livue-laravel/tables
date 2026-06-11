@@ -28,4 +28,9 @@ return [
     'import_error_unreadable' => 'Could not read the uploaded file.',
     'import_error_empty' => 'The CSV file appears to be empty or invalid.',
     'import_error_no_columns_mapped' => 'No columns were mapped. Please map at least one column.',
+    'export_modal_description' => 'Select the columns to include in the export.',
+    'export_success_notification' => 'Record(s) exported successfully',
+    'import_success_notification' => ':count record(s) imported successfully',
+    'import_partial_success_notification' => ':count imported, :errors error(s)',
+    'import_error_rows' => 'Rows with errors: :rows',
 ];

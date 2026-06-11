@@ -243,7 +243,7 @@
                                         type="search"
                                         :value="tableColumnSearches['{{ $column->getName() }}'] || ''"
                                         @input="searchTableColumn(['{{ $column->getName() }}', $event.target.value], { debounce: 300 })"
-                                        placeholder="Search..."
+                                        placeholder="{{ __('primix-tables::tables.search_placeholder') }}"
                                         class="block w-full rounded-md border-0 px-2.5 py-1 text-xs text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-600 bg-transparent"
                                     >
                                 @endif

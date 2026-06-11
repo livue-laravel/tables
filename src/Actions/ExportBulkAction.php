@@ -37,9 +37,9 @@ class ExportBulkAction extends BulkAction
         $this->color('gray');
         $this->modal();
         $this->modalHeading(__('primix-tables::tables.export_selected_records'));
-        $this->modalDescription('Select the columns to include in the export.');
+        $this->modalDescription(__('primix-tables::tables.export_modal_description'));
         $this->modalSubmitActionLabel(__('primix-tables::tables.export'));
-        $this->successNotificationTitle('Record(s) exported successfully');
+        $this->successNotificationTitle(__('primix-tables::tables.export_success_notification'));
 
         $this->action(function (array $data): void {
             $selectedColumnNames = $data['columns'] ?? [];

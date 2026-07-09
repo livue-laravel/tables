@@ -60,6 +60,10 @@ class Table extends ComponentContainer implements Htmlable
 
     protected string $orderColumn = 'sort_order';
 
+    protected ?string $defaultSortColumn = null;
+
+    protected string $defaultSortDirection = 'asc';
+
     protected bool|Closure $isRowClickEnabled = true;
 
     protected ?Closure $recordUrlResolver = null;
@@ -254,6 +258,28 @@ class Table extends ComponentContainer implements Htmlable
         $this->orderColumn = $column;
 
         return $this;
+    }
+
+    /**
+     * Ordinamento di partenza applicato solo quando l'utente non ha
+     * selezionato un sort di colonna (che ha sempre la precedenza).
+     */
+    public function defaultSort(string $column, string $direction = 'asc'): static
+    {
+        $this->defaultSortColumn = $column;
+        $this->defaultSortDirection = strtolower($direction) === 'desc' ? 'desc' : 'asc';
+
+        return $this;
+    }
+
+    public function getDefaultSortColumn(): ?string
+    {
+        return $this->defaultSortColumn;
+    }
+
+    public function getDefaultSortDirection(): string
+    {
+        return $this->defaultSortDirection;
     }
 
     public function isReorderable(): bool

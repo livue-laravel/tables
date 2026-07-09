@@ -72,6 +72,8 @@ trait HasTable
         } elseif ($table->isReorderable()) {
             // Default sort by order column when reorderable and no user sort
             $query->orderBy($table->getOrderColumn());
+        } elseif ($table->getDefaultSortColumn() !== null) {
+            $query->orderBy($table->getDefaultSortColumn(), $table->getDefaultSortDirection());
         }
 
         return $this->paginate($query, $this->tablePerPage);
@@ -353,6 +355,10 @@ trait HasTable
         if ($this->tableSortColumn) {
             $direction = $this->tableSortDirection === 'desc' ? 'sortByDesc' : 'sortBy';
             $items = $items->{$direction}(fn ($item) => data_get($item, $this->tableSortColumn));
+            $items = $items->values();
+        } elseif (($defaultSortColumn = $table->getDefaultSortColumn()) !== null) {
+            $direction = $table->getDefaultSortDirection() === 'desc' ? 'sortByDesc' : 'sortBy';
+            $items = $items->{$direction}(fn ($item) => data_get($item, $defaultSortColumn));
             $items = $items->values();
         }
 

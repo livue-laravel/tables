@@ -64,6 +64,8 @@ class Table extends ComponentContainer implements Htmlable
 
     protected string $defaultSortDirection = 'asc';
 
+    protected ?string $recordTitleAttribute = null;
+
     protected bool|Closure $isRowClickEnabled = true;
 
     protected ?Closure $recordUrlResolver = null;
@@ -275,6 +277,33 @@ class Table extends ComponentContainer implements Htmlable
     public function getDefaultSortColumn(): ?string
     {
         return $this->defaultSortColumn;
+    }
+
+    /**
+     * Attributo usato come "titolo" del record (es. nel recordTitle delle
+     * azioni di riga in grid). Esplicito, oppure ereditato dalla Resource
+     * collegata; null se non determinabile (i template ripiegano su 'id').
+     */
+    public function recordTitleAttribute(?string $attribute): static
+    {
+        $this->recordTitleAttribute = $attribute;
+
+        return $this;
+    }
+
+    public function getRecordTitleAttribute(): ?string
+    {
+        if ($this->recordTitleAttribute !== null) {
+            return $this->recordTitleAttribute;
+        }
+
+        $resource = $this->getResourceClass();
+
+        if ($resource !== null && method_exists($resource, 'getRecordTitleAttribute')) {
+            return $resource::getRecordTitleAttribute();
+        }
+
+        return null;
     }
 
     public function getDefaultSortDirection(): string

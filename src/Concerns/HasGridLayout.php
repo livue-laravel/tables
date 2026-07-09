@@ -12,6 +12,8 @@ trait HasGridLayout
 
     protected bool|Closure $isLayoutSwitchable = false;
 
+    protected string|Closure|null $gridCardView = null;
+
     protected bool|Closure $isVirtualScroll = false;
 
     protected int|Closure $virtualScrollItemSize = 46;
@@ -50,6 +52,20 @@ trait HasGridLayout
     public function getGridColumns(): int
     {
         return (int) $this->evaluate($this->gridColumns);
+    }
+
+    public function gridCardView(string|Closure|null $view): static
+    {
+        $this->gridCardView = $view;
+
+        return $this;
+    }
+
+    public function getGridCardView(): ?string
+    {
+        $view = $this->evaluate($this->gridCardView);
+
+        return $view !== null ? (string) $view : null;
     }
 
     public function switchableLayout(bool|Closure $condition = true): static

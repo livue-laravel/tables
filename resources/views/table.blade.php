@@ -136,16 +136,20 @@
                             "
                         @endif
                     >
-                        <div class="p-4 space-y-2">
-                            @foreach($visibleColumns as $column)
-                                <div class="flex items-start justify-between gap-2">
-                                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{ $column->getLabel() }}</span>
-                                    <span class="text-sm text-gray-900 dark:text-white text-right">
-                                        {!! $column->record($record)->toHtml() !!}
-                                    </span>
-                                </div>
-                            @endforeach
-                        </div>
+                        @if($table->getGridCardView())
+                            @include($table->getGridCardView(), ['record' => $record, 'table' => $table, 'columns' => $visibleColumns])
+                        @else
+                            <div class="p-4 space-y-2">
+                                @foreach($visibleColumns as $column)
+                                    <div class="flex items-start justify-between gap-2">
+                                        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">{{ $column->getLabel() }}</span>
+                                        <span class="text-sm text-gray-900 dark:text-white text-right">
+                                            {!! $column->record($record)->toHtml() !!}
+                                        </span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                         @if($hasActions || $table->isSelectable())
                             <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-2 flex items-center justify-between bg-gray-50 dark:bg-gray-900/50">
                                 @if($table->isSelectable())

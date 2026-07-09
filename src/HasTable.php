@@ -27,7 +27,8 @@ trait HasTable
 
     public string $tableSortDirection = 'asc';
 
-    public int $tablePerPage = 10;
+    /** 0 = not yet initialized: synced from Table::defaultPerPage() on first build. */
+    public int $tablePerPage = 0;
 
     public string $tableLayout = '';
 
@@ -44,6 +45,7 @@ trait HasTable
         if ($this->cachedTable === null) {
             $this->cachedTable = $this->table(Table::make()->livue($this));
             $this->initializeTableLayoutState($this->cachedTable);
+            $this->initializeTablePerPageState($this->cachedTable);
         }
 
         return $this->cachedTable;
@@ -316,6 +318,13 @@ trait HasTable
         }
 
         $table->layout($this->tableLayout);
+    }
+
+    protected function initializeTablePerPageState(Table $table): void
+    {
+        if ($this->tablePerPage <= 0) {
+            $this->tablePerPage = $table->getDefaultPerPage();
+        }
     }
 
     private function getEmbeddedTableRecords(Table $table): LengthAwarePaginator

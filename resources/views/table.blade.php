@@ -150,7 +150,7 @@
                                 @endforeach
                             </div>
                         @endif
-                        @if($hasActions || $table->isSelectable())
+                        @if(($hasActions || $table->isSelectable()) && ! $table->getGridCardView())
                             <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-2 flex items-center justify-between bg-gray-50 dark:bg-gray-900/50">
                                 @if($table->isSelectable())
                                     <input

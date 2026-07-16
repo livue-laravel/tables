@@ -50,6 +50,8 @@ class Table extends ComponentContainer implements Htmlable
 
     protected bool|Closure $isStriped = false;
 
+    protected int|Closure|null $pollInterval = null;
+
     protected bool|Closure $isSelectable = true;
 
     protected FiltersLayout $filtersLayout = FiltersLayout::Dropdown;
@@ -219,6 +221,18 @@ class Table extends ComponentContainer implements Htmlable
     public function striped(bool|Closure $condition = true): static
     {
         $this->isStriped = $condition;
+
+        return $this;
+    }
+
+    /**
+     * Re-render the table automatically every $seconds via LiVue v-poll
+     * (paused while the browser tab is inactive, runs only when the table
+     * is visible in the viewport). Null disables polling.
+     */
+    public function poll(int|Closure|null $seconds = 10): static
+    {
+        $this->pollInterval = $seconds;
 
         return $this;
     }
@@ -471,6 +485,13 @@ class Table extends ComponentContainer implements Htmlable
     public function isStriped(): bool
     {
         return (bool) $this->evaluate($this->isStriped);
+    }
+
+    public function getPollInterval(): ?int
+    {
+        $interval = $this->evaluate($this->pollInterval);
+
+        return $interval !== null ? max(1, (int) $interval) : null;
     }
 
     public function isSelectable(): bool

@@ -20,13 +20,16 @@
     $recordIds = $records->pluck($table->getRecordKeyName())->toArray();
     $recordCount = count($recordIds);
     $spaEnabled = (bool) ($spa ?? false);
+    $pollInterval = $table->getPollInterval();
 @endphp
 
 @once
     @livueLoadScript('primix-tables', 'primix/tables', ['type' => 'module'])
 @endonce
 
-<div class="bg-white dark:bg-gray-800 shadow-sm ring-1 ring-gray-900/5 sm:rounded-lg">
+<div class="bg-white dark:bg-gray-800 shadow-sm ring-1 ring-gray-900/5 sm:rounded-lg"
+    @if($pollInterval) v-poll.{{ $pollInterval }}s.visible @endif
+>
     {{-- Header Actions --}}
     @if(count($headerActions) > 0)
         <div class="border-b border-gray-200 dark:border-gray-700 px-4 py-3 sm:px-6">
